@@ -42,7 +42,7 @@ ond optionally downloads and unpacks the release tarball.
 It caches the app store `apps.json` file for a maximum of one hour to prevent
 running into the appstore rate limits.
 
-It's a wrapper around [nextcloud/appstore-action](https://github.com/nextcloud/appstore-action).
+It's a wrapper around [nextcloud/appstore-metadata-action](https://github.com/nextcloud/appstore-metadata-action).
 
 Here is an example that downloads the latest version of `collectives` that's
 compatible with Nextcloud 30 and unpacks it to `apps-extra`:
@@ -50,7 +50,7 @@ compatible with Nextcloud 30 and unpacks it to `apps-extra`:
 ```yaml
 - name: Get collectives app from app store
   id: collectives_app
-  uses: nextcloud/appstore-action@3df8d62ff6f2c264406409334f12c72756fcae39 # v1.0.0
+  uses: nextcloud/appstore-action@ccaa71b99639cd397bdd122687626b1873bf6d36 # v1.0.0
   with:
     appid: collectives
     server_major: 31
