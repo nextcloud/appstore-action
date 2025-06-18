@@ -1,0 +1,70 @@
+name: 'Nextcloud appstore action'
+description: 'Download and/or get metadata of latest app version from Nextcloud app store'
+
+inputs:
+  appid:
+    description: Nextcloud app id
+    required: true
+  server_major:
+    description: Nextcloud server major version number (optional)
+    required: false
+    default: ''
+  download:
+    description: Download the app (optional)
+    required: false
+    default: true
+  apps_path:
+    description: Path where to unpack the app (optional)
+    required: false
+    default: 'apps'
+
+
+outputs:
+  release:
+    description: Metadata of the latest app release compatible with specified Nextcloud version
+  version:
+    description: Version of the release
+  download:
+    description: Download URL of the release tarball
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Save current date and hour for the cache key
+      run: echo "DATE_HOUR=$(date +"%Y-%m-%d-%H")" >> $GITHUB_ENV
+
+    - name: Restore appstore apps.json
+      id: cache_appstore_apps
+      uses: actions/cache@v4
+      with:
+        path: 'apps.json'
+        key: 'appstore_apps_${{ env.DATE_HOUR }}'
+
+    - name: Fetch appstore repository
+      if: ${{ steps.cache_appstore_apps.outputs.cache-hit != 'true' }}
+      id: appstore_apps
+      run: curl -fL -o 'apps.json' https://apps.nextcloud.com/api/v1/apps.json
+
+    - name: Get app metadata
+      id: app_metadata
+      uses: nextcloud/appstore-metadata-action@1873692fd1b3c198b3c57280462ed6ac7d6dde0a # v1.0.0
+      with:
+        appid: ${{ inputs.appid }}
+        server_major: ${{ inputs.server_major }}
+
+    - name: Output app metadata
+      run: |
+        echo 'release=${{ steps.app_metadata.outputs.release }}' >> $GITHUB_OUTPUT
+        echo 'version=${{ steps.app_metadata.outputs.version }}' >> $GITHUB_OUTPUT
+        echo 'download=${{ steps.app_metadata.outputs.download }}' >> $GITHUB_OUTPUT
+
+    - name: Fetch app release tarball
+      if: ${{ inputs.download == 'true' }}
+      run: curl -fL -o '${{ runner.temp }}/app.tar.gz' '${{ steps.app_metadata.outputs.download }}'
+
+    - name: Unpack app release tarball
+      if: ${{ inputs.download == 'true' }}
+      run: |
+        cd '${{ apps_path }}'
+        tar -xzf '${{ runner.temp/app.tar.gz'
+        cd ..
