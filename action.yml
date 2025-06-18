@@ -12,7 +12,7 @@ inputs:
   download:
     description: Download the app (optional)
     required: false
-    default: true
+    default: false
   apps_path:
     description: Path where to unpack the app (optional)
     required: false
@@ -32,6 +32,7 @@ runs:
   steps:
     - name: Save current date and hour for the cache key
       run: echo "DATE_HOUR=$(date +"%Y-%m-%d-%H")" >> $GITHUB_ENV
+      shell: bash
 
     - name: Restore appstore apps.json
       id: cache_appstore_apps
@@ -44,6 +45,7 @@ runs:
       if: ${{ steps.cache_appstore_apps.outputs.cache-hit != 'true' }}
       id: appstore_apps
       run: curl -fL -o 'apps.json' https://apps.nextcloud.com/api/v1/apps.json
+      shell: bash
 
     - name: Get app metadata
       id: app_metadata
@@ -57,14 +59,17 @@ runs:
         echo 'release=${{ steps.app_metadata.outputs.release }}' >> $GITHUB_OUTPUT
         echo 'version=${{ steps.app_metadata.outputs.version }}' >> $GITHUB_OUTPUT
         echo 'download=${{ steps.app_metadata.outputs.download }}' >> $GITHUB_OUTPUT
+      shell: bash
 
     - name: Fetch app release tarball
       if: ${{ inputs.download == 'true' }}
       run: curl -fL -o '${{ runner.temp }}/app.tar.gz' '${{ steps.app_metadata.outputs.download }}'
+      shell: bash
 
     - name: Unpack app release tarball
       if: ${{ inputs.download == 'true' }}
       run: |
-        cd '${{ apps_path }}'
-        tar -xzf '${{ runner.temp/app.tar.gz'
+        cd '${{ inputs.apps_path }}'
+        tar -xzf '${{ runner.temp }}/app.tar.gz'
         cd ..
+      shell: bash
