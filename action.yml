@@ -22,10 +22,13 @@ inputs:
 outputs:
   release:
     description: Metadata of the latest app release compatible with specified Nextcloud version
+    value: ${{ steps.app_metadata.outputs.release }}
   version:
     description: Version of the release
+    value: ${{ steps.app_metadata.outputs.version }}
   download:
     description: Download URL of the release tarball
+    value: ${{ steps.app_metadata.outputs.download }}
 
 runs:
   using: 'composite'

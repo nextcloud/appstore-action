@@ -22,10 +22,6 @@ Download and/or get metadata of latest app version from Nextcloud app store.
 
 ## Outputs
 
-### `release`
-
-Metadata of the latest app release compatible with specified Nextcloud version
-
 ### `version`
 
 Version of the release
