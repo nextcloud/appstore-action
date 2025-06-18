@@ -14,7 +14,7 @@ Download and/or get metadata of latest app version from Nextcloud app store.
 
 ### `download`
 
-**Optional** Whether the app shall be downloaded. (default `false``)
+**Optional** Whether the app shall be downloaded. (default `false`)
 
 ### `apps_folder`
 
@@ -35,7 +35,7 @@ Download URL of the release
 The action retrieves the metadata of the latest app version from the app store
 ond optionally downloads and unpacks the release tarball.
 
-It caches the app store `apps.json` file for a maximum of one hour to prevent
+It **caches the app store `apps.json` file for a maximum of one hour** to prevent
 running into the appstore rate limits.
 
 It's a wrapper around [nextcloud/appstore-metadata-action](https://github.com/nextcloud/appstore-metadata-action).
