@@ -20,9 +20,6 @@ inputs:
 
 
 outputs:
-  release:
-    description: Metadata of the latest app release compatible with specified Nextcloud version
-    value: ${{ steps.app_metadata.outputs.release }}
   version:
     description: Version of the release
     value: ${{ steps.app_metadata.outputs.version }}
@@ -59,7 +56,6 @@ runs:
 
     - name: Output app metadata
       run: |
-        echo 'release=${{ steps.app_metadata.outputs.release }}' >> $GITHUB_OUTPUT
         echo 'version=${{ steps.app_metadata.outputs.version }}' >> $GITHUB_OUTPUT
         echo 'download=${{ steps.app_metadata.outputs.download }}' >> $GITHUB_OUTPUT
       shell: bash
