@@ -46,7 +46,7 @@ compatible with Nextcloud 30 and unpacks it to `apps-extra`:
 ```yaml
 - name: Get collectives app from app store
   id: collectives_app
-  uses: nextcloud/appstore-action@0b8580527539647fea82283580fc9046cf78d229 # v1.0.0
+  uses: nextcloud/appstore-action@4b71247f6f3292af995eab10038ba8f367c4e10d # v1.0.0
   with:
     appid: collectives
     server_major: 31
