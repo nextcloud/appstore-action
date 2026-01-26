@@ -36,7 +36,7 @@ runs:
 
     - name: Restore appstore apps.json
       id: cache_appstore_apps
-      uses: actions/cache@v4
+      uses: actions/cache@8b402f58fbc84540c8b491a91e594a4576fec3d7 # v5.0.2
       with:
         path: 'apps.json'
         key: 'appstore_apps_${{ env.DATE_HOUR }}'

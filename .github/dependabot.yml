@@ -10,4 +10,6 @@ updates:
     day: monday
     time: "03:00"
     timezone: Europe/Paris
+  cooldown:
+    default-days: 7
   open-pull-requests-limit: 10
