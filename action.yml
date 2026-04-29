@@ -49,7 +49,7 @@ runs:
 
     - name: Get app metadata
       id: app_metadata
-      uses: nextcloud/appstore-metadata-action@1873692fd1b3c198b3c57280462ed6ac7d6dde0a # v1.0.0
+      uses: nextcloud/appstore-metadata-action@ba9e87d365eea6dc284e6c34a80445e37f0d9654 # v1.0.0
       with:
         appid: ${{ inputs.appid }}
         server_major: ${{ inputs.server_major }}
